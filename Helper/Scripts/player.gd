@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var SPEED = 300.0
 @export var ACCELERATION = 10
 @export var hp: int  = 100
-@export_flags("Dash","Silkgun","AtomicHammer","Haunt")var powers = 0
+@export_flags("Dash","Silkgun","AtomicHammer","Haunt","Vector","Ignite")var powers = 0
 
 
 func _init() -> void:

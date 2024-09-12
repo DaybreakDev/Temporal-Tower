@@ -880,6 +880,6 @@ shape = SubResource("CapsuleShape2D_3qw18")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_l6awl")
 animation = &"IdleLeft"
-frame = 11
+frame = 3
 
 [node name="Hitbox" type="Node" parent="."]
