@@ -11,9 +11,13 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 func hit(damage):
 	hp = hp - damage
+	knockback()
 	
 	if hp <= 0:
 		die()
+
+func knockback():
+	pass
 
 func die():
 	if hasPower:
