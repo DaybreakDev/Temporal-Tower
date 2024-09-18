@@ -6,12 +6,13 @@ var prevDirection : Vector2
 @export var ACCELERATION = 10
 @export var hp: int  = 100
 @export_flags("Dash","Silkgun","AtomicHammer","Haunt","Vector","Ignite")var powers = 0
-@export_enum("Idle","Walk","Attack")var state :int
+@export_enum("Idle","Walk","Attack","Vector")var state :int
 
 const values = {
 	"idle": 0,
 	"walk": 1,
 	"attack": 2,
+	"vector": 3,
 }
 
 
@@ -37,6 +38,15 @@ func _physics_process(delta: float) -> void:
 			state_machine.travel("Attack")
 			$Hitbox/AttackTimer.start()
 		
+	
+	#handles item1 action scrpit
+	if Input.is_action_just_pressed("item1"):
+		var temp_name = "Vector"
+		print("item1 is pressed")
+		skillselector(temp_name)
+		
+	
+	
 	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -71,6 +81,8 @@ func _physics_process(delta: float) -> void:
 func canmove() -> bool:
 	if state == values.attack:
 		return false
+	elif state == values.vector:
+		return false
 	else:
 		return true
 
@@ -103,3 +115,31 @@ func _on_attack_timer_timeout() -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemy"):
 		body.hit(2)
+		
+
+#code for using skill vector  
+func skill_vector() -> void:
+	state = values.vector
+	
+	for i in 100:
+		if state != values.vector:
+			break
+		await get_tree().create_timer(0.1).timeout
+		print("time: ",i)
+	
+	if state == values.vector:
+		state = values.idle
+
+#code for vector shooting in direction
+func skill_vector_shoot() -> void:
+	return
+
+
+#code for skillslot to launch selected skill
+func skillselector(string) -> void:
+	match string:
+		"Vector":
+			skill_vector()
+			print("Vector gun on!")
+		_:
+			print("nothing selected")
