@@ -22,7 +22,7 @@ func knockback():
 func die():
 	if hasPower:
 		givepower()
-		
+	queue_free()
 func givepower():
 	if randi_range(0,droprate) == droprate:
 		Global.powers |= powername

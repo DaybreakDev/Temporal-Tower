@@ -43,6 +43,7 @@ enabled=PackedStringArray("res://addons/AS2P/plugin.cfg", "res://addons/crt_scri
 [global_group]
 
 Enemy="The class for enemies"
+Player="The Player Character"
 
 [input]
 

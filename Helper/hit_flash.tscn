@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhtixpoltc4f2"]
+
+[ext_resource type="Script" path="res://Helper/Scripts/hit_flash.gd" id="1_8krqq"]
+
+[node name="HitFlash" type="Area2D"]
+collision_mask = 3
+monitoring = false
+monitorable = false
+script = ExtResource("1_8krqq")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.067
+one_shot = true
+
+[node name="Timer2" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

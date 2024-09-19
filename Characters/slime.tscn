@@ -58,7 +58,9 @@ animations = [{
 }]
 
 [node name="Slime" instance=ExtResource("1_nv8er")]
+collision_layer = 3
 script = ExtResource("2_rm7ca")
+SPEED = 50.0
 state = 0
 hasPower = true
 powername = 1
@@ -71,3 +73,13 @@ shape = SubResource("CircleShape2D_rdrn3")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_llji7")
 frame_progress = 0.281716
+
+[node name="RoamTimer" type="Timer" parent="." index="2"]
+one_shot = true
+autostart = true
+
+[node name="RestTimer" type="Timer" parent="." index="3"]
+one_shot = true
+
+[connection signal="timeout" from="RoamTimer" to="." method="_on_roam_timer_timeout"]
+[connection signal="timeout" from="RestTimer" to="." method="_on_rest_timer_timeout"]

@@ -8,6 +8,8 @@ var prevDirection : Vector2
 @export_flags("Dash","Silkgun","AtomicHammer","Haunt","Vector","Ignite")var powers = 0
 @export_enum("Idle","Walk","Attack")var state :int
 
+var hitboxstatus = true
+
 const values = {
 	"idle": 0,
 	"walk": 1,
@@ -27,7 +29,8 @@ func _physics_process(delta: float) -> void:
 	var inputDirection = Vector2(horizontal, vertical).normalized()
 	
 	#handles the attack script
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed("attack") and canattack():
+		$HitFlash.start()
 		if state != values.attack:
 			if inputDirection != Vector2.ZERO:
 				$AnimationTree.set("parameters/Attack/blend_position",inputDirection)
@@ -61,6 +64,16 @@ func _physics_process(delta: float) -> void:
 	
 	if inputDirection != Vector2.ZERO:
 		prevDirection = inputDirection
+		
+	'''if $Hitbox/Area2D.monitoring == false && hitboxstatus == true:
+		print('F')
+		hitboxstatus = false
+	if $Hitbox/Area2D.monitoring == true && hitboxstatus == false:
+		print('T')
+		hitboxstatus = true'''
+	if $Hitbox/Area2D.monitoring == true:
+		checkhitbox()
+	
 	
 	anim_handler(inputDirection)
 	
@@ -74,10 +87,11 @@ func canmove() -> bool:
 	else:
 		return true
 
-func attack(direction):
-	if Input.is_action_just_pressed("attack"):
-		$AnimationTree.set("parameters/Attack/blend_position",direction)
-		state_machine.travel("Attack")
+func canattack():
+	if state == values.attack:
+		return false
+	else:
+		return true
 
 func anim_handler(direction):
 	if direction != Vector2.ZERO:
@@ -101,5 +115,13 @@ func _on_attack_timer_timeout() -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	if !body.is_in_group("Player"):
+		print("something")
 	if body.is_in_group("Enemy"):
+		print("hit")
 		body.hit(2)
+func checkhitbox():
+	var col = $Hitbox/Area2D.get_overlapping_bodies()
+	for i in col.size():
+		if col[i].is_in_group("Enemy"):
+			print("hit it")
