@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bopquyxusuwcc"]
+[gd_scene load_steps=4 format=3 uid="uid://bopquyxusuwcc"]
 
 [ext_resource type="Script" path="res://Ignition/ignition_bomb.gd" id="1_240m6"]
+[ext_resource type="Texture2D" uid="uid://crhvgo2u7hgrf" path="res://Ignition/test_bomb.png" id="2_b162y"]
+[ext_resource type="Texture2D" uid="uid://c15fojacn7l4h" path="res://Ignition/bomb_shadow.png" id="2_spahu"]
 
 [node name="IgnitionBomb" type="Node2D"]
 script = ExtResource("1_240m6")
@@ -11,6 +13,11 @@ autostart = true
 
 [node name="Visuals" type="Node2D" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+[node name="ShadowSprite" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("2_spahu")
+
+[node name="BombSprite" type="Sprite2D" parent="Visuals"]
+position = Vector2(0, -3)
+texture = ExtResource("2_b162y")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
