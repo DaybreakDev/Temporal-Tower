@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://buxuado74fp8r"]
+
+[ext_resource type="Script" path="res://Ignition/ignition_weapon.gd" id="1_3c8xw"]
+[ext_resource type="Texture2D" uid="uid://nv6uwdp82s00" path="res://Ignition/ignition_weapon.png" id="1_124n2"]
+[ext_resource type="PackedScene" uid="uid://bopquyxusuwcc" path="res://Ignition/ignition_bomb.tscn" id="2_fl7kh"]
+
+[node name="IgnitionWeapon" type="Node2D"]
+script = ExtResource("1_3c8xw")
+ignition_bomb_scene = ExtResource("2_fl7kh")
+
+[node name="AttackRateTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="Visuals" type="Node2D" parent="."]
+position = Vector2(12, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+position = Vector2(16, 0)
+texture = ExtResource("1_124n2")
+
+[node name="IgnitionBombSpawnPoint" type="Node2D" parent="."]
+position = Vector2(48, 0)
