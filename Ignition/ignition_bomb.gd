@@ -9,6 +9,7 @@ extends Node2D
 @export var scale_curve: Curve
 
 @onready var bomb_timer: Timer = $BombTimer
+@onready var visuals: Node2D = $Visuals
 @onready var bomb_sprite: Sprite2D = $Visuals/BombSprite
 
 var time_passed := 0.0
@@ -18,7 +19,7 @@ var arc_height := 0.0
 
 
 func _ready() -> void:
-	launch(travel_distance, travel_time)
+	pass
 
 
 func _process(delta: float) -> void:
@@ -34,9 +35,9 @@ func _process(delta: float) -> void:
 	global_position = lerp(starting_position, destination_position, time_curve.sample_baked(elapsed_time))
 	
 	#Arc the bomb sprite and scale it for effect
-	global_position.y -= y_curve.sample_baked(elapsed_time) * arc_height
-	#bomb_sprite.global_position.x = global_position.x
-	#bomb_sprite.global_scale = Vector2.ONE * scale_curve.sample_baked(elapsed_time)
+	bomb_sprite.global_position = lerp(starting_position, destination_position, time_curve.sample_baked(elapsed_time))
+	bomb_sprite.global_position.y -= y_curve.sample_baked(elapsed_time) * arc_height
+	bomb_sprite.global_scale = Vector2.ONE * scale_curve.sample_baked(elapsed_time)
 
 
 #Call method when creating bomb
@@ -45,7 +46,7 @@ func launch(launch_distance: float, detonation_time: float) -> void:
 	starting_position = global_position
 	
 	#Find destination position based on launch distance
-	destination_position = starting_position + Vector2(launch_distance, 0)
+	destination_position = starting_position + Vector2(launch_distance, launch_distance)
 	
 	#set travel distance and travel time
 	travel_distance = launch_distance
