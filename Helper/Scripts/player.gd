@@ -2,11 +2,15 @@ extends CharacterBody2D
 #This is the player script for Temporal Tower. 
 @onready var state_machine = $AnimationTree.get("parameters/playback")
 var prevDirection : Vector2
-@export var SPEED = 300.0
-@export var ACCELERATION = 10
+@export var SPEED = 120.0
+@export var ACCELERATION = 20
 @export var hp: int  = 100
 @export_flags("Dash","Silkgun","AtomicHammer","Haunt","Vector","Ignite")var powers = 0
 @export_enum("Idle","Walk","Attack","Vector")var state :int
+
+#Status markers
+var status : String = "Free"
+var WebHealth : int = 2
 
 const values = {
 	"idle": 0,
@@ -14,6 +18,7 @@ const values = {
 	"attack": 2,
 	"vector": 3,
 }
+
 
 
 func _init() -> void:
@@ -37,7 +42,8 @@ func _physics_process(delta: float) -> void:
 			state = values.attack
 			state_machine.travel("Attack")
 			$Hitbox/AttackTimer.start()
-		
+		#Anthony Berlanga : Just calling the attack function here so that I can test the "Webbed" Status
+		attack(inputDirection)
 	
 	#handles item1 action scrpit
 	if Input.is_action_just_pressed("item1"):
@@ -77,7 +83,6 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 
-
 func canmove() -> bool:
 	if state == values.attack:
 		return false
@@ -90,6 +95,11 @@ func attack(direction):
 	if Input.is_action_just_pressed("attack"):
 		$AnimationTree.set("parameters/Attack/blend_position",direction)
 		state_machine.travel("Attack")
+		if status == "Webbed":
+			WebHealth -= 1
+			if WebHealth == 0:
+				set_status("Free")
+				WebHealth = 2
 
 func anim_handler(direction):
 	if direction != Vector2.ZERO:
@@ -99,23 +109,6 @@ func anim_handler(direction):
 		state_machine.travel("Idle")
 	if state == values.walk:
 		state_machine.travel("Walk")
-
-
-func _on_animated_sprite_2d_animation_finished() -> void:
-	print("anim finished")
-	if state == values.attack:
-		state = values.idle
-		
-
-
-func _on_attack_timer_timeout() -> void:
-	state = values.idle
-
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Enemy"):
-		body.hit(2)
-		
 
 #code for using skill vector  
 func skill_vector() -> void:
@@ -134,7 +127,6 @@ func skill_vector() -> void:
 func skill_vector_shoot() -> void:
 	return
 
-
 #code for skillslot to launch selected skill
 func skillselector(string) -> void:
 	match string:
@@ -143,3 +135,38 @@ func skillselector(string) -> void:
 			print("Vector gun on!")
 		_:
 			print("nothing selected")
+
+#Anthony Berlanga - Means by which we can affect the player's movespeed or apply DoT etc.
+func set_status(newStatus:String) -> void:
+	status = newStatus
+	match status:
+		"Webbed":
+			SPEED = 0
+		"Free":
+			SPEED = 120
+
+func set_speed(newspeed : int) -> void:
+	SPEED = newspeed
+
+func get_speed() -> int:
+	return SPEED
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	print("anim finished")
+	if state == values.attack:
+		state = values.idle
+		
+
+
+func _on_attack_timer_timeout() -> void:
+	state = values.idle
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.is_in_group("Enemy"):
+		body.hit(2)
+		
+
+func _on_i_frame_timer_timeout() -> void:
+	pass
+	#canBeHit = true

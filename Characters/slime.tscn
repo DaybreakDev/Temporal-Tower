@@ -68,6 +68,6 @@ droprate = 25
 position = Vector2(0.5, 0)
 shape = SubResource("CircleShape2D_rdrn3")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="1"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="1" groups=["Enemy"]]
 sprite_frames = SubResource("SpriteFrames_llji7")
 frame_progress = 0.281716

@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://b84lgd3p6bqf4"]
+
+[ext_resource type="Script" path="res://spider.gd" id="1_rl38p"]
+[ext_resource type="Texture2D" uid="uid://dwxlkrynyx42t" path="res://Characters/Spider/Spider.png" id="2_q4d2b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pc47e"]
+atlas = ExtResource("2_q4d2b")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xq6b6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pc47e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bmc2a"]
+radius = 9.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_37y7g"]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b2v2h"]
+radius = 150.0
+
+[node name="Spider" type="CharacterBody2D" groups=["Enemy"]]
+script = ExtResource("1_rl38p")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xq6b6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_bmc2a")
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, -3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_37y7g")
+
+[node name="DetectBox" type="Area2D" parent="." groups=["Enemy"]]
+position = Vector2(0, -3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectBox"]
+shape = SubResource("CircleShape2D_b2v2h")
+
+[node name="ShotCooldown" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="ShotFiring" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="body_entered" from="DetectBox" to="." method="_on_detect_box_body_entered"]
+[connection signal="body_exited" from="DetectBox" to="." method="_on_detect_box_body_exited"]
+[connection signal="timeout" from="ShotCooldown" to="." method="_on_shot_cooldown_timeout"]
+[connection signal="timeout" from="ShotFiring" to="." method="_on_shot_firing_timeout"]

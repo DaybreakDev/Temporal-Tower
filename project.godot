@@ -39,11 +39,12 @@ project/assembly_name="Temporal Tower"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AS2P/plugin.cfg")
+enabled=PackedStringArray("res://addons/AS2P/plugin.cfg", "res://addons/MetroidvaniaSystem/EditorExtension/plugin.cfg", "res://addons/MetroidvaniaSystem/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [global_group]
 
 Enemy="The class for enemies"
+Player="PlayerGroup"
 
 [input]
 
