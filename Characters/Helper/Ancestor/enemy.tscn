@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dy4qh20qftpto"]
+
+[ext_resource type="Script" path="res://Helper/Ancestor/enemy.gd" id="1_pcnwv"]
+
+[node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
+script = ExtResource("1_pcnwv")

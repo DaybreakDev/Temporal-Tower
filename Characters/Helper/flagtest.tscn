@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dh4rymxk4i0i0"]
+
+[ext_resource type="Script" path="res://Helper/Scripts/flagtest.gd" id="1_yqi25"]
+
+[node name="Flagtest" type="Node2D"]
+script = ExtResource("1_yqi25")
+flag = 1
