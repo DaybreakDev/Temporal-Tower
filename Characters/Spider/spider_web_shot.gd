@@ -4,6 +4,7 @@ extends Area2D
 const my_scene: PackedScene = preload("res://Characters/Spider/SpiderWebShot.tscn")
 
 signal setOwner(newOwner:Node2D)
+signal PlaceWebNow()
 
 var speed :int
 var firedVector : Vector2
@@ -28,8 +29,8 @@ func PlaceWeb():
 	var newPlacedWeb := PlacedWeb.new_placedWeb()
 	add_child(newPlacedWeb)
 	newPlacedWeb.emit_signal("setOwner", owner)
-	print("NewPW Owner:",newPlacedWeb.get_owner())
-	print("ShotWebOwnder",owner)
+	#print("NewPW Owner:",newPlacedWeb.get_owner())
+	#print("ShotWebOwnder",owner)
 	#Anthony Berlanga - I think this line of code means that when the spider dies the webs will disappear,
 	#Fix if so
 
@@ -50,10 +51,10 @@ func _on_life_timer_timeout() -> void:
 	queue_free()
 
 
-func _on_web_place_timer_timeout() -> void:
-	PlaceWeb()
-
-
 func _on_set_owner(newOwner: Node2D) -> void:
 	self.set_owner(newOwner)
 	self.reparent(newOwner)
+
+
+func _on_place_web_now() -> void:
+	PlaceWeb()

@@ -21,6 +21,7 @@ texture = ExtResource("1_mcqhw")
 wait_time = 4.0
 autostart = true
 
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="setOwner" from="." to="." method="_on_set_owner"]

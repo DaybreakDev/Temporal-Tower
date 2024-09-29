@@ -45,6 +45,7 @@ enabled=PackedStringArray("res://addons/AS2P/plugin.cfg", "res://addons/Metroidv
 
 Enemy="The class for enemies"
 Player="PlayerGroup"
+TileMap=""
 
 [input]
 

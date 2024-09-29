@@ -21,11 +21,7 @@ wait_time = 2.0
 one_shot = true
 autostart = true
 
-[node name="WebPlaceTimer" type="Timer" parent="."]
-wait_time = 0.1
-autostart = true
-
+[connection signal="PlaceWebNow" from="." to="." method="_on_place_web_now"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="setOwner" from="." to="." method="_on_set_owner"]
 [connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]
-[connection signal="timeout" from="WebPlaceTimer" to="." method="_on_web_place_timer_timeout"]

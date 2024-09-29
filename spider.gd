@@ -23,10 +23,24 @@ func _ready():
 	
 
 func _physics_process(delta):
-	acceleration += seek()
-	velocity += acceleration * delta
-	velocity = velocity.limit_length(speed)
-	position += velocity * delta
+	if target:
+		if position.distance_to(target.position) > 110:
+			acceleration += seek()
+			velocity += acceleration * delta
+			velocity = velocity.limit_length(speed)
+			move_and_slide()
+		elif position.distance_to(target.position) < 80:
+			acceleration += seek() * Vector2(-1,-1)
+			velocity += acceleration * delta
+			velocity = velocity.limit_length(speed)
+			move_and_slide()
+		else:
+			acceleration += orbit()
+			velocity += acceleration * delta
+			velocity = velocity.limit_length(speed)
+			move_and_slide()
+	else:
+		pass
 
 func seek():
 	var steer = Vector2.ZERO
@@ -37,13 +51,25 @@ func seek():
 		steer = (desired - velocity).normalized() * steer_force
 	return steer
 
+func orbit():
+	var steer = Vector2.ZERO
+	if target :
+		var desired = (target.position - position).normalized()
+		desired = Vector2(desired.x*-1, desired.y)
+		desired = Vector2(desired.y, desired.x)
+		if speed != 0:
+			desired = desired * speed
+		steer = (desired - velocity).normalized() * steer_force
+	return steer
+
 func fireWebShot():
 	var shotVector = seek()
 	var currentShot := WebShot.new_shot(175, shotVector, position)
 	add_child(currentShot)
 	currentShot.emit_signal("setOwner", owner)
+	currentShot.emit_signal("PlaceWebNow")
 	#currentShot.reparent(owner)
-	print(owner)
+	#print(owner)
 
 func hit() -> void:
 	Health -= 1
