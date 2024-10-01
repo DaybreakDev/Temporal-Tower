@@ -1,17 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://b84lgd3p6bqf4"]
+[gd_scene load_steps=11 format=3 uid="uid://b84lgd3p6bqf4"]
 
-[ext_resource type="Script" path="res://spider.gd" id="1_rl38p"]
-[ext_resource type="Texture2D" uid="uid://dwxlkrynyx42t" path="res://Characters/Spider/Spider.png" id="2_q4d2b"]
+[ext_resource type="Script" path="res://Characters/Spider/spider.gd" id="1_rl38p"]
+[ext_resource type="Texture2D" uid="uid://dwxlkrynyx42t" path="res://Characters/Spider/Spider.png" id="2_7xabi"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pc47e"]
-atlas = ExtResource("2_q4d2b")
+[sub_resource type="AtlasTexture" id="AtlasTexture_eyv3d"]
+atlas = ExtResource("2_7xabi")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_xq6b6"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_hcusj"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pc47e")
+"texture": SubResource("AtlasTexture_eyv3d")
 }],
 "loop": true,
 "name": &"default",
@@ -25,7 +25,68 @@ radius = 9.0
 radius = 9.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b2v2h"]
-radius = 200.0
+radius = 210.0
+
+[sub_resource type="Animation" id="Animation_chb4h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2r1ua"]
+resource_name = "hurt"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -10), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.796078, 0.0784314, 0.105882, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2i2po"]
+_data = {
+"RESET": SubResource("Animation_chb4h"),
+"hurt": SubResource("Animation_2r1ua")
+}
 
 [node name="Spider" type="CharacterBody2D" groups=["Enemy"]]
 collision_layer = 129
@@ -34,7 +95,7 @@ motion_mode = 1
 script = ExtResource("1_rl38p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_xq6b6")
+sprite_frames = SubResource("SpriteFrames_hcusj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
@@ -62,6 +123,11 @@ autostart = true
 [node name="ShotFiring" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2i2po")
+}
 
 [connection signal="body_entered" from="DetectBox" to="." method="_on_detect_box_body_entered"]
 [connection signal="body_exited" from="DetectBox" to="." method="_on_detect_box_body_exited"]

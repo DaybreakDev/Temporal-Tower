@@ -1,0 +1,137 @@
+[gd_scene load_steps=11 format=3 uid="uid://c7urja2lneq3s"]
+
+[ext_resource type="Script" path="res://Characters/BabySpider/baby_spider.gd" id="1_kgwad"]
+[ext_resource type="Texture2D" uid="uid://bqkm8e6va4fhh" path="res://Characters/BabySpider/BabySpider.png" id="1_ysud3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_marr7"]
+atlas = ExtResource("1_ysud3")
+region = Rect2(0, 0, 17, 7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v88ew"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_marr7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lkd3e"]
+radius = 5.0
+height = 15.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6gxsl"]
+radius = 5.0
+height = 15.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eumrl"]
+radius = 210.0
+
+[sub_resource type="Animation" id="Animation_0vxpi"]
+resource_name = "huret"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -10), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.0352941, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_00wqp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1tkk4"]
+_data = {
+"RESET": SubResource("Animation_00wqp"),
+"hurt": SubResource("Animation_0vxpi")
+}
+
+[node name="BabySpider" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 129
+collision_mask = 129
+script = ExtResource("1_kgwad")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_v88ew")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_lkd3e")
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_6gxsl")
+
+[node name="DetectBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectBox"]
+shape = SubResource("CircleShape2D_eumrl")
+
+[node name="AttackCooldown" type="Timer" parent="." groups=["Enemy"]]
+wait_time = 1.5
+one_shot = true
+
+[node name="AttackWarmup" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="AttackActive" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1tkk4")
+}
+
+[connection signal="body_entered" from="DetectBox" to="." method="_on_detect_box_body_entered"]
+[connection signal="body_exited" from="DetectBox" to="." method="_on_detect_box_body_exited"]
+[connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
+[connection signal="timeout" from="AttackWarmup" to="." method="_on_attack_warmup_timeout"]
+[connection signal="timeout" from="AttackActive" to="." method="_on_attack_active_timeout"]

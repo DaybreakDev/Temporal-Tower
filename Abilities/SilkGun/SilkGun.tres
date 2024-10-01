@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SilkGun" load_steps=3 format=3 uid="uid://hxb8ube0rqam"]
+
+[ext_resource type="Script" path="res://Abilities/SilkGun/SilkGun.gd" id="1_cpxpu"]
+[ext_resource type="Texture2D" uid="uid://dr4dfwqhhwed3" path="res://Characters/Spider/PlacedWeb.png" id="1_x3tsu"]
+
+[resource]
+script = ExtResource("1_cpxpu")
+AbilityName = "SilkGun"
+AbilitySprite = ExtResource("1_x3tsu")

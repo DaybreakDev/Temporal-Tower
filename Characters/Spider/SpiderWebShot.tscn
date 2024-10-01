@@ -1,9 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://c6wo7s751ppdv"]
 
 [ext_resource type="Script" path="res://Characters/Spider/spider_web_shot.gd" id="1_lbjwp"]
-[ext_resource type="Texture2D" uid="uid://djqxs4rm86ob8" path="res://Characters/Spider/WebShot.png" id="2_gnmsw"]
+[ext_resource type="Texture2D" uid="uid://djqxs4rm86ob8" path="res://Characters/Spider/WebShot.png" id="2_ict2u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_toac5"]
+resource_local_to_scene = true
 
 [node name="SpiderWebShot" type="Area2D"]
 top_level = true
@@ -14,7 +15,7 @@ shape = SubResource("CircleShape2D_toac5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(2.75, 2.75)
-texture = ExtResource("2_gnmsw")
+texture = ExtResource("2_ict2u")
 
 [node name="LifeTimer" type="Timer" parent="."]
 wait_time = 2.0

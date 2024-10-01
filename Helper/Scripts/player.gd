@@ -1,10 +1,14 @@
 extends CharacterBody2D
 #This is the player script for Temporal Tower. 
 @onready var state_machine = $AnimationTree.get("parameters/playback")
+#input direction vars put here to access in other functions - AB
 var prevDirection : Vector2
+var inputDirection : Vector2
 @export var SPEED = 120.0
 @export var ACCELERATION = 20
 @export var hp: int  = 100
+@export var AbilitySlot1 : Ability
+@export var AbilitySlot2 : Ability
 @export_flags("Dash","Silkgun","AtomicHammer","Haunt","Vector","Ignite")var powers = 0
 @export_enum("Idle","Walk","Attack","Vector")var state :int
 
@@ -30,7 +34,7 @@ func _physics_process(delta: float) -> void:
 	# Handle basic movement
 	var horizontal = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	var vertical = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
-	var inputDirection = Vector2(horizontal, vertical).normalized()
+	inputDirection = Vector2(horizontal, vertical).normalized()
 	
 	#handles the attack script
 	if Input.is_action_just_pressed("attack"):
@@ -45,11 +49,12 @@ func _physics_process(delta: float) -> void:
 		#Anthony Berlanga : Just calling the attack function here so that I can test the "Webbed" Status
 		attack(inputDirection)
 	
+	#Disabled here to test silkgun in _input(event) - AB
 	#handles item1 action scrpit
-	if Input.is_action_just_pressed("item1"):
-		var temp_name = "Vector"
-		print("item1 is pressed")
-		skillselector(temp_name)
+	#if Input.is_action_just_pressed("item1"):
+	#	var temp_name = "Vector"
+	#	print("item1 is pressed")
+	#	skillselector(temp_name)
 		
 	
 	
@@ -84,7 +89,7 @@ func _physics_process(delta: float) -> void:
 	
 
 func canmove() -> bool:
-	if state == values.attack:
+	if state == values.attack || status == "Webbed":
 		return false
 	elif state == values.vector:
 		return false
@@ -136,20 +141,39 @@ func skillselector(string) -> void:
 		_:
 			print("nothing selected")
 
+#Testing silkgun and ability resources here
+func _input(event):
+	if event.is_action_pressed("item1"):
+		if inputDirection != Vector2.ZERO:
+			AbilitySlot1.fire(inputDirection, position, self)
+		else:
+			AbilitySlot1.fire(prevDirection, position, self)
+		print("Fired")
+
 #Anthony Berlanga - Means by which we can affect the player's movespeed or apply DoT etc.
+#Found a bug where if you cut yourself free while in the floor web for spiders
+#you can get infinite speed, so now the canmove() function will just check if "Webbed"
 func set_status(newStatus:String) -> void:
 	status = newStatus
 	match status:
 		"Webbed":
-			SPEED = 0
+			pass
+			#SPEED = 0
 		"Free":
-			SPEED = 120
+			pass
+			#SPEED = 120
 
 func set_speed(newspeed : int) -> void:
 	SPEED = newspeed
 
 func get_speed() -> int:
 	return SPEED
+
+func set_touchingWeb(newbool : bool) -> void:
+	if newbool:
+		set_collision_mask_value(8, false)
+	else:
+		set_collision_mask_value(8, true)
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	print("anim finished")

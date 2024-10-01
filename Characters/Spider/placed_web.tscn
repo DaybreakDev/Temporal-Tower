@@ -1,13 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://cqmpg83psbm2w"]
+[gd_scene load_steps=5 format=3 uid="uid://cqmpg83psbm2w"]
 
 [ext_resource type="Script" path="res://Characters/Spider/placed_web.gd" id="1_1eo1l"]
-[ext_resource type="Texture2D" uid="uid://dr4dfwqhhwed3" path="res://Characters/Spider/PlacedWeb.png" id="1_mcqhw"]
+[ext_resource type="Texture2D" uid="uid://dr4dfwqhhwed3" path="res://Characters/Spider/PlacedWeb.png" id="2_6om3w"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_amcdr"]
-radius = 7.0
-height = 20.0
+radius = 9.0
+height = 24.0
 
-[node name="PlacedWeb" type="Area2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ulwda"]
+radius = 3.0
+height = 8.0
+
+[node name="PlacedWeb" type="Area2D" groups=["PlacedWebsGroup"]]
+collision_mask = 129
 script = ExtResource("1_1eo1l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -15,14 +20,21 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_amcdr")
 
 [node name="PlacedWeb" type="Sprite2D" parent="."]
-texture = ExtResource("1_mcqhw")
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_6om3w")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 4.0
 autostart = true
 
-[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[node name="PlaceNewWebDetection" type="Area2D" parent="."]
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlaceNewWebDetection"]
+shape = SubResource("CapsuleShape2D_ulwda")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="setOwner" from="." to="." method="_on_set_owner"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_exited" from="PlaceNewWebDetection" to="." method="_on_place_new_web_detection_area_exited"]

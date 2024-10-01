@@ -1,14 +1,12 @@
-[gd_scene load_steps=13 format=4 uid="uid://dac1sk0coibny"]
+[gd_scene load_steps=11 format=4 uid="uid://dac1sk0coibny"]
 
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_off06"]
 [ext_resource type="PackedScene" uid="uid://ddvse61qx05f4" path="res://player.tscn" id="2_vwr2m"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="3_qsrug"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_drypl"]
 [ext_resource type="Texture2D" uid="uid://d4f8cmy015t5i" path="res://Assets/Pixelarium - GrassLands - Full Version/Pack content/Sprites/Tileset/spr_grass_tileset.png" id="5_x802l"]
-[ext_resource type="Resource" uid="uid://hxb8ube0rqam" path="res://Abilities/SilkGun/SilkGun.tres" id="6_bueh8"]
 [ext_resource type="PackedScene" uid="uid://btrwqxw5vnlbx" path="res://slime.tscn" id="6_v6idl"]
-[ext_resource type="PackedScene" uid="uid://b84lgd3p6bqf4" path="res://Characters/Spider/spider.tscn" id="7_kvjjs"]
-[ext_resource type="PackedScene" uid="uid://c7urja2lneq3s" path="res://Characters/BabySpider/BabySpider.tscn" id="9_yrwek"]
+[ext_resource type="PackedScene" uid="uid://b84lgd3p6bqf4" path="res://Spider/spider.tscn" id="7_ni361"]
 
 [sub_resource type="Resource" id="Resource_mqwki"]
 script = ExtResource("4_drypl")
@@ -453,11 +451,11 @@ texture = ExtResource("5_x802l")
 15:13/0 = 0
 16:13/0 = 0
 17:13/0 = 0
-17:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.25, -9.25, 9.5, -9, 9.375, 9.25, -9.375, 9.25)
+17:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 18:13/0 = 0
-18:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.25, -9.25, 9.5, -9, 9.375, 9.25, -9.375, 9.25)
+18:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 19:13/0 = 0
-19:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.25, -9.25, 9.5, -9, 9.375, 9.25, -9.375, 9.25)
+19:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 20:13/0 = 0
 21:13/0 = 0
 22:13/0 = 0
@@ -465,11 +463,11 @@ texture = ExtResource("5_x802l")
 24:13/0 = 0
 25:13/0 = 0
 26:13/0 = 0
-26:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.25, -9.25, 9.5, -9, 9.375, 9.25, -9.375, 9.25)
+26:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 27:13/0 = 0
-27:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.25, -9.25, 9.5, -9, 9.375, 9.25, -9.375, 9.25)
+27:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 28:13/0 = 0
-28:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.25, -9.25, 9.5, -9, 9.375, 9.25, -9.375, 9.25)
+28:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 29:13/0 = 0
 1:14/0 = 0
 4:14/0 = 0
@@ -481,11 +479,11 @@ texture = ExtResource("5_x802l")
 15:14/0 = 0
 16:14/0 = 0
 17:14/0 = 0
-17:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.25, -9.25, 9.5, -9, 9.375, 9.25, -9.375, 9.25)
+17:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 18:14/0 = 0
-18:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.25, -9.25, 9.5, -9, 9.375, 9.25, -9.375, 9.25)
+18:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 19:14/0 = 0
-19:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.25, -9.25, 9.5, -9, 9.375, 9.25, -9.375, 9.25)
+19:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 20:14/0 = 0
 21:14/0 = 0
 22:14/0 = 0
@@ -493,11 +491,11 @@ texture = ExtResource("5_x802l")
 24:14/0 = 0
 25:14/0 = 0
 26:14/0 = 0
-26:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.25, -9.25, 9.5, -9, 9.375, 9.25, -9.375, 9.25)
+26:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 27:14/0 = 0
-27:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.25, -9.25, 9.5, -9, 9.375, 9.25, -9.375, 9.25)
+27:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 28:14/0 = 0
-28:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.25, -9.25, 9.5, -9, 9.375, 9.25, -9.375, 9.25)
+28:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 29:14/0 = 0
 1:15/0 = 0
 2:15/0 = 0
@@ -836,16 +834,12 @@ tile_set = SubResource("TileSet_myy1h")
 [node name="Player" parent="." instance=ExtResource("2_vwr2m")]
 position = Vector2(2, 27)
 SPEED = 200.0
-AbilitySlot1 = ExtResource("6_bueh8")
 
 [node name="Slime" parent="." instance=ExtResource("6_v6idl")]
 position = Vector2(-118, 77)
 
-[node name="Spider" parent="." instance=ExtResource("7_kvjjs")]
-position = Vector2(358, -43)
+[node name="Spider" parent="." instance=ExtResource("7_ni361")]
+position = Vector2(240, 205)
 
-[node name="Spider2" parent="." instance=ExtResource("7_kvjjs")]
-position = Vector2(261, 185)
-
-[node name="BabySpider" parent="." instance=ExtResource("9_yrwek")]
-position = Vector2(120, 220)
+[node name="Spider2" parent="." instance=ExtResource("7_ni361")]
+position = Vector2(297, -95)
