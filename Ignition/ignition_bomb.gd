@@ -1,5 +1,6 @@
 extends Node2D
 
+@export var explosion_scene: PackedScene
 @export var travel_distance := 64.0
 @export var travel_time := 3.0
 @export var min_arc_height := 50.0
@@ -25,6 +26,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if time_passed > travel_time:
 		#Blow up here then get rid of it
+		var explosion_instance = explosion_scene.instantiate() as Node2D
+		var bomb_layer = get_tree().get_first_node_in_group("bomb_layer") as Node2D
+		bomb_layer.add_child(explosion_instance)
+		explosion_instance.global_position = self.global_position
 		queue_free()
 		return
 	
@@ -46,7 +51,9 @@ func launch(launch_distance: float, detonation_time: float) -> void:
 	starting_position = global_position
 	
 	#Find destination position based on launch distance
-	destination_position = starting_position + Vector2(launch_distance, launch_distance)
+	destination_position = starting_position + Vector2(launch_distance * \
+		ceil(global_position.direction_to(get_global_mouse_position()).x),\
+		launch_distance * ceil(global_position.direction_to(get_global_mouse_position()).y))
 	
 	#set travel distance and travel time
 	travel_distance = launch_distance

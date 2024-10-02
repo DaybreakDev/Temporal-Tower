@@ -28,6 +28,8 @@ func launch_bomb() -> void:
 	#Set the bombs position based on spawn point
 	ignition_bomb_instance.global_position = ignition_bomb_spawn_point.global_position
 	
+	print(ceil(global_position.direction_to(get_global_mouse_position()).x))
+	
 	#Call launch method
 	ignition_bomb_instance.launch(bomb_distance, bomb_detonation_time)
 	
